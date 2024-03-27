@@ -1,15 +1,14 @@
-package baekjoon.Bronze;
+package 문자열반복;
 
 import java.util.Scanner;
 
-public class 문자열반복 {
+class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int T = sc.nextInt();
         for(int i = 0; i < T; i++){
             int R = sc.nextInt();
             String S = sc.next();
-
             System.out.println(newString(S, R));
         }
     }
