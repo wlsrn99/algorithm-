@@ -1,5 +1,5 @@
 package baekjoon.Bronze;
 
-public class test {
+public class Main {
     // test
 }
