@@ -1,5 +1,5 @@
 
-# [Silver 4] IPv6
+# [Gold 5] IPv6
 
 [문제 링크](https://www.acmicpc.net/problem/3107)
 ### 성능 요약
