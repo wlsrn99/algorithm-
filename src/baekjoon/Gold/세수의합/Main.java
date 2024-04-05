@@ -15,15 +15,9 @@ N(5 ≤ N ≤ 1,000)개의 자연수들로 이루어진 집합 U -> 경우의수
 
 #내가 생각한 논리
 세수의 합이 가장 큰 K를 찾아야 하므로 먼저 저장하는 것을 오름차순 또는 내림차순으로 정렬해야하지않을까
-세수의합이 집합에 존재하는 지 확인할때 k를 key 로하는 map이 있으면 빠르게 확인이 가능할거같다
--> 인덱스의 벨류를 key로하고 인덱스를 value에 저장 하는 map을 생성
--> 그럼 value를 오름차순또는 내림차순으로 정렬된 배열도 생성
-배열에서 1개또는 2개또는 3개의 값을 꺼낸뒤 더해서 map에 넣었을 때 있는 경우를 구해야 한다
-선택을 어떤식으로 해야할까
--> 첫 번째 수로 2번째로 큰 수 하나 선택해서 3개 더하기 시도
--> 두 번째 수로 제일 작은 수 하나 선택해서 3개 더하기 시도
--> 없으면 (찾는 수 - 첫번째 수 - 두번째 수)가 map에 있는지 넣어보기
-이런식으로 하면 되지 않을까
+x + y + z = k를
+x + y = k - z로 바꿔보자
+그렇다면 x + y 배열을 만들어서  k - z가 포함되어있는지 보면 된다
  */
 
 import java.io.BufferedReader;
@@ -48,7 +42,6 @@ public class Main {
             }
         }
 
-        // k값을 찾기 위한 set 생성
         Arrays.sort(arr);
         Collections.sort(sumList);
         System.out.println(findK(N, sumList, arr));
@@ -57,10 +50,9 @@ public class Main {
     private static int findK(int N, List<Integer> sumList, int[] arr){
         // 최대를 찾으므로 N-1인덱스부터 시작
         for(int i = N - 1; i >= 0; i--){
-            for(int xy : sumList){
-                int resultIdx = Arrays.binarySearch(arr, xy + arr[i]);
-                if(resultIdx >= 0){
-                    return arr[resultIdx];
+            for(int j = N - 1; j >= 0; j--){
+                if(Collections.binarySearch(sumList, (arr[i] - arr[j])) >= 0){
+                    return arr[i];
                 }
             }
         }
