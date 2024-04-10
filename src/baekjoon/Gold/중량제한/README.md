@@ -1,7 +1,7 @@
 
 # [Gold 3] 중량 제한
 
-[문제 링크](https://www.acmicpc.net/problem/1863)
+[문제 링크](https://www.acmicpc.net/problem/1939)
 ### 성능 요약
 
 <p>메모리: 78000 KB 시간: 696 ms </p>

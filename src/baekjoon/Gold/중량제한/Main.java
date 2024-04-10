@@ -67,6 +67,7 @@ public class Main {
                 right = currentMid - 1;
             }
         }
+
         System.out.println(result);
     }
 
