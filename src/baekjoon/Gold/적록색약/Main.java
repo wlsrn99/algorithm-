@@ -44,7 +44,7 @@ public class Main {
         for(int i = 0; i < N; i++){
             for(int j = 0; j < N; j++){
                 if(!visited[i][j]){
-                    bfs(i, j);
+                    dfs(i, j);
                     count++;
                 }
             }
@@ -68,7 +68,7 @@ public class Main {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 if (!visited[i][j]) {
-                    bfs(i, j);
+                    dfs(i, j);
                     count++;
                 }
             }
@@ -79,7 +79,7 @@ public class Main {
         System.out.println(normal + " " + disabledPerson);
     }
 
-    private static void bfs(int i, int j) {
+    private static void dfs(int i, int j) {
         visited[i][j] = true;
         char R = picture[i][j]; // 첫 시작 노드
         for(int k = 0; k < 4; k++){
@@ -91,7 +91,7 @@ public class Main {
             if(checkCurrentLocation(newX, newY) && picture[newX][newY] == picture[i][j]){
                 //bfs에 넣어서 방문 체크 해줘서
                 //같은 영역으로 처리
-                bfs(newX, newY);
+                dfs(newX, newY);
             }
         }
     }
