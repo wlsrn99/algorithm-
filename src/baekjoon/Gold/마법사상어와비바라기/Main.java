@@ -3,6 +3,8 @@ package 마법사상어와비바라기;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /*
 # 요구사항
@@ -34,17 +36,22 @@ M번의 이동이 모두 끝난 후 바구니에 들어있는 물의 양의 합
 //viseted가 false인 칸들중에 물의 양이 2이상인 모든 칸에 구름이 생긴다 그리고 벨류는 -2가된다
  */
 public class Main {
-    static int[] dx = {-1,-1,0,1,1,1,0,-1};
-    static int[] dy = {0,-1,-1,-1,0,1,1,1};
+    static int[] dx = {0,-1,-1,-1,0,1,1,1};
+    static int[] dy = {-1,-1,0,1,1,1,0,-1};
+    static int N,M;
     static int[][] arr;
+    static boolean[][] visited;
+    static Queue<Cloud> clouds = new LinkedList<>(); //구름 위치를 저장할 큐
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         String[] input = br.readLine().split(" ");
-        int N = Integer.parseInt(input[0]);
-        int M = Integer.parseInt(input[1]);
+        N = Integer.parseInt(input[0]);
+        M = Integer.parseInt(input[1]);
 
         arr = new int[N][N];
+        visited = new boolean[N][N];
         for(int i = 0; i < N; i++){
             input = br.readLine().split(" ");
             for(int j =0; j < N; j++){
@@ -52,6 +59,94 @@ public class Main {
             }
         }
 
+        clouds.offer(new Cloud(N-1, 0));
+        clouds.offer(new Cloud(N-1, 1));
+        clouds.offer(new Cloud(N-2, 0));
+        clouds.offer(new Cloud(N-2, 1));
 
+        for(int i = 0; i < M; i++){
+            input = br.readLine().split(" ");
+            int D = Integer.parseInt(input[0]);
+            int S = Integer.parseInt(input[1]);
+            // 구름 이동
+            moveCloud(D-1,S);
+            // 구름 제거 + 물복사 버그
+            deleteCloud();
+            // 구름 생성 + 물양 -2
+            reduceWater();
+        }
+
+        int sum = 0;
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                sum += arr[i][j];
+            }
+        }
+        System.out.println(sum);
+    }
+
+    // 구름이 di 방향으로 si칸 이동
+    // 구름이 있는 칸의 물 양이 1증가
+    public static void moveCloud(int d, int s){
+        for(Cloud cloud : clouds){
+            //좌표 넘어가는거 처리
+            cloud.x = (N + cloud.x + dx[d] * (s % N)) % N;
+            cloud.y = (N + cloud.y + dy[d] * (s % N)) % N;
+            //물의 양 증가
+            arr[cloud.x][cloud.y]++;
+        }
+    }
+
+    //구름 제거 + 물복사 버그
+    private static void deleteCloud(){
+        while(!clouds.isEmpty()){
+            Cloud cloud = clouds.poll();
+            int count = 0;
+
+            visited[cloud.x][cloud.y] = true;
+            for(int i = 1; i <= 7; i +=2){
+                int nx = cloud.x + dx[i];
+                int ny = cloud.y + dy[i];
+
+                if(checkIdx(nx,ny)){
+                    if(arr[nx][ny] >= 1){
+                        count++;
+                    }
+                }
+            }
+            arr[cloud.x][cloud.y] += count;
+        }
+    }
+
+    //물의 양이 2이상인 모든 칸에 구름이 생기고 물양 -2
+    // 구름이 사라진칸은 제외
+    private static void reduceWater(){
+        for(int i = 0; i < N; i++){
+            for(int j = 0; j < N; j++){
+                if(!visited[i][j] && arr[i][j] >= 2){
+                    arr[i][j] -= 2;
+                    clouds.offer(new Cloud(i,j));
+                }
+            }
+        }
+        //구름 만들어진 곳 초기화
+        visited = new boolean[N][N];
+    }
+
+    // 좌표가 존재하는지 체크
+    private static boolean checkIdx(int nx, int ny){
+        if(nx >= 0 && nx < N && ny >= 0 && ny < N) {
+            return true;
+        }
+        return false;
+    }
+    public static class Cloud {
+        int x;
+        int y;
+
+        public Cloud(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
     }
 }
