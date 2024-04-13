@@ -3,6 +3,7 @@ package 행복유치원;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.PriorityQueue;
 
 /*
@@ -18,39 +19,37 @@ import java.util.PriorityQueue;
   조의 개수를 나타내는 자연수 K(1 ≤ K ≤ N)
   원생들의 키를 나타내는 N개의 자연수 원생의 키는 10^9를 넘지 않는 자연수
  # 내가 생각한 논리
- 비용은 조에서 가장 키가 큰 원생과 가장 키가 작은 원생의 키 차이
- -> 최소가 되려면 가장 키가 큰 원생을 우선으로 빼야 한다
- -> 왼쪽에 있는 원생이 오른쪽보다 크지 않다? - 중복이 가능 할 수도, queue를 써야되나
- -> 내림차순 우선순위 큐를 사용하는게 좋을거 같다
-
-1 3 5 6 9 10
-1 3 5 40 70 400 9000
+ 유치원생들의 키 차이가 최소가 되는 조건
+ 인접한 키 차이를 모두 구해서 오름차순으로 정렬한 뒤 고르면 된다
  */
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String[] input = br.readLine().split(" ");
-        int N = Integer.parseInt(input[0]);
-        int K = Integer.parseInt(input[1]);
-
-        PriorityQueue<Integer> pq = new PriorityQueue<>(((o1, o2) -> o2 - o1));
+        int N = Integer.parseInt(input[0]); //원생의 수
+        int K = Integer.parseInt(input[1]); //조의 개수
 
         input = br.readLine().split(" ");
-        int first = 0;
-        for(int i = 0; i < N; i++){
-            if(i == 0){
-                first = Integer.parseInt(input[i]);
-            }else {
-                pq.offer(Integer.parseInt(input[i]));
-            }
+        int[] arr = new int[N];
+        for(int i = 0; i <N; i++){
+            arr[i] = Integer.parseInt(input[i]);
+        }
+        //인접한 원생의 키차이 배열
+        int[] cost = new int[N-1];
+        for(int i = 0; i < N-1; i++){
+            cost[i] = arr[i+1] - arr[i];
         }
 
-        for(int i = 0; i < K-1; i++){
-            pq.poll();
-        }
+        Arrays.sort(cost);
 
-        int end = pq.poll();
-        System.out.println(end-first);
+        int sum = 0;
+        // N-1 = 키 차이의 개수
+        // k-1 = 구분선의 개수
+        // 골라야하는 키차이 개수 = (키차이의 개수) - (구분 선의 개수)
+        for(int i = 0; i < (N-1)- (K-1); i++){
+            sum += cost[i];
+        }
+        System.out.println(sum);
 
     }
 }

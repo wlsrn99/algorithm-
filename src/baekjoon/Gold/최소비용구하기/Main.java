@@ -3,7 +3,10 @@ package 최소비용구하기;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
+import java.util.Queue;
 
 /*
 # 요구사항
@@ -12,86 +15,79 @@ A번째 도시에서 B번째 도시까지 가는데 드는 버스 비용을 최�
 # 내 논리
 dfs 로 시작 노드부터 깊이 탐색해서
 5인 노드가 나오면 최솟값 갱신 후 재귀종료
--> 근데 시간초과...
-다익스트라를 한 번 써보겠다
--> 또 시간초과가 떴다...
-노드의 개수가 최대 1000개로 적으므로 인접 리스트 대신 인접 행렬을 사용하면 될 것 같다
+-> 근데 제한 시간이 0.5초 이므로 안되겠지...
+-> 다익스트라를 한 번 써보겠다
 
  */
 public class Main {
-    static int N; // 도시의 갯수 - 노드 갯수
-    static int M; // 버스 갯수 - 간선 갯수
+    static int N; //도시의 갯수 -노드 갯수
+    static int M; //버스 갯수 - 간선 갯수
     static boolean[] visited;
     static int[] dist;
-    static int[][] matrix; // 인접 행렬
 
+    static ArrayList<ArrayList<CityCost>> nodeList;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
         M = Integer.parseInt(br.readLine());
 
         visited = new boolean[N + 1];
-        dist = new int[N + 1];
-        matrix = new int[N + 1][N + 1]; // 인접 행렬 초기화
+        dist = new int[N+1];
 
-        for (int i = 1; i < N + 1; i++) {
-            dist[i] = Integer.MAX_VALUE; // 최단 거리 배열 초기화
-            for (int j = 1; j < N + 1; j++) {
-                if (i != j) {
-                    // 자기 자신으로의 거리는 0
-                    // 연결되어 있지 않은 노드는 계산하면 안되므로 나머지는 무한대로 초기화
-                    matrix[i][j] = Integer.MAX_VALUE;
-                }
-            }
+        nodeList = new ArrayList<>();
+        for(int i = 0; i < N + 1; i++){
+            nodeList.add(new ArrayList<>());
+            dist[i] = Integer.MAX_VALUE;
         }
 
-        for (int i = 0; i < M; i++) {
+        for(int i = 0; i < M; i++){
             String[] input = br.readLine().split(" ");
             int city1 = Integer.parseInt(input[0]);
             int city2 = Integer.parseInt(input[1]);
             int cost = Integer.parseInt(input[2]);
 
-            // 인접 행렬에 거리 정보 저장
-            matrix[city1][city2] = Math.min(matrix[city1][city2], cost);
+            nodeList.get(city1).add(new CityCost(city2, cost));
         }
 
         String[] input = br.readLine().split(" ");
         int start = Integer.parseInt(input[0]);
         int end = Integer.parseInt(input[1]);
-        //다익스트라 시작
+        //다익스트라시작
         dijkstra(start);
 
         System.out.println(dist[end]);
     }
 
-    static void dijkstra(int start) {
-        dist[start] = 0;
-        // 비용 기준 오름차순 정렬
+    static void dijkstra(int start){
+        //비용을 기준으로 오름차순 으로 저장
         PriorityQueue<CityCost> pq = new PriorityQueue<>((o1, o2) -> o1.cost - o2.cost);
+        // 시작 노드 넣기
+        // 시작은 비용이 0
         pq.offer(new CityCost(start, 0));
+        dist[start] = 0;
 
-        while (!pq.isEmpty()) {
+        while(!pq.isEmpty()){
             CityCost current = pq.poll();
+            if(visited[current.destination]){
+                continue;
+            }
             visited[current.destination] = true;
 
-            for (int i = 1; i < N + 1; i++) {
-                if (matrix[current.destination][i] != Integer.MAX_VALUE) {
-                    //다음 위치로 가는데에 필요한 비용 계산
-                    int nextCost = dist[current.destination] + matrix[current.destination][i];
-                    if (!visited[i] && dist[i] > nextCost) { //방문하지 않았고, 비용이 원래 있던 비용보다 작으면 갱신
-                        dist[i] = nextCost;
-                        pq.offer(new CityCost(i, dist[i]));
-                    }
+            for(CityCost next : nodeList.get(current.destination)){
+                // 방문하지 않았고, 현재 노드를 거쳐서 다른 노드로 이동하는 거리가 더 짧을 경우
+                if(!visited[next.destination] && dist[next.destination] > current.cost + next.cost){
+                    dist[next.destination] = current.cost + next.cost;
+                    pq.offer(new CityCost(next.destination, dist[next.destination]));
                 }
             }
         }
     }
 
-    private static class CityCost {
+    private static class CityCost{
         int destination;
         int cost;
+        CityCost(int destination, int cost){
 
-        CityCost(int destination, int cost) {
             this.destination = destination;
             this.cost = cost;
         }
