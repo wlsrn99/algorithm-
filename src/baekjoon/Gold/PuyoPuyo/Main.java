@@ -51,6 +51,7 @@ public class Main {
             if (!found) break; // 더 이상 터뜨릴 뿌요가 없으면 종료
             chain++; // 연쇄 횟수 증가
             // 뿌요 떨어뜨리기
+            // row기준으로 한줄씩 처리
             for (int j = 0; j < 6; j++) {
                 List<Character> colors = new ArrayList<>();
                 for (int i = 11; i >= 0; i--) {
