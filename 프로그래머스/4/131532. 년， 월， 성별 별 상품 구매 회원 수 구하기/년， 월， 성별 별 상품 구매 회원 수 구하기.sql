@@ -1,0 +1,22 @@
+# 쿼리를 작성하는 목표, 확인할 지표 : 년, 월, 성별 별로 상품을 구매한 회원수를 집계
+# 쿼리 계산 방법 : JOIN, GROUP BY
+# 데이터의 기간 : x
+# 사용할 테이블 : USER_INFO, ONLINE_SALE
+# Join KEY : USER_ID
+# 데이터 특징 : 성별 정보가 없는 경우 결과에서 제외
+
+SELECT 
+  YEAR(A.SALES_DATE) AS YEAR,
+  MONTH(A.SALES_DATE) AS MONTH,
+  B.GENDER AS GENDER,
+  COUNT(DISTINCT B.USER_ID) AS USERS
+FROM 
+  ONLINE_SALE A
+  LEFT JOIN USER_INFO B 
+  ON A.USER_ID = B.USER_ID
+WHERE 
+  B.GENDER IS NOT NULL
+GROUP BY
+  YEAR,MONTH,GENDER
+ORDER BY
+  YEAR,MONTH,GENDER ASC
