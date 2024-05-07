@@ -4,6 +4,7 @@
 # 사용할 테이블 : ONLINE_SALE
 # Join KEY :
 # 데이터 특징 : 회원 ID를 기준으로 오름차순 정렬해주시고 회원 ID가 같다면 상품 ID를 기준으로 내림차순 정렬
+
 SELECT
  custom.USER_ID,
  custom.PRODUCT_ID
@@ -22,7 +23,5 @@ ORDER BY
  ) custom
 WHERE
  (custom.cnt >= 2)
- # OR
- # (custom.SALES_AMOUNT >= 2)
 ORDER BY
  USER_ID, PRODUCT_ID DESC
