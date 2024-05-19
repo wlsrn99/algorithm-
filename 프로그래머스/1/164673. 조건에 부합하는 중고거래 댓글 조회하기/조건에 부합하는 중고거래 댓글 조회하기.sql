@@ -1,0 +1,23 @@
+-- 코드를 입력하세요
+#  2022년 10월
+#  댓글 작성일을 기준으로 오름차순
+#  댓글 작성일이 같다면 게시글 제목을 기준으로 오름차순 정렬
+# JOIN KEY = WRITER_ID
+SELECT
+ b.TITLE,
+ b.BOARD_ID,
+ r.REPLY_ID,
+ r.WRITER_ID,
+ r.CONTENTS,
+ DATE_FORMAT(r.CREATED_DATE, '%Y-%m-%d') AS CREATED_DATE
+FROM
+ USED_GOODS_REPLY AS r
+LEFT JOIN
+ USED_GOODS_BOARD AS b
+ON 
+ b.BOARD_ID = r.BOARD_ID
+WHERE
+ (DATE_FORMAT(b.CREATED_DATE, '%Y-%m') = "2022-10")
+
+ORDER BY
+ r.CREATED_DATE,b.TITLE
