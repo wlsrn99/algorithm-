@@ -28,7 +28,6 @@ public class Main {
 		}
 
 		int sum = 0;
-		boolean dummy = false;
 		int count = 0;
 		while (!deque.isEmpty()) {
 			if (deque.peekFirst().score >= 0 && deque.size() >= 2) {
@@ -53,15 +52,6 @@ public class Main {
 		}
 
 		System.out.println(sum);
-
-		/**
-		 * 점수가 양수일 때
-		 * 최대한 얻어야 함
-		 * 딜러의 패에서 해당 카드를 가져온다
-		 *
-		 * 점수가 음수일 때
-		 * 최대한 버려야 함
-		 */
 	}
 
 	private static class Card {
