@@ -17,7 +17,7 @@ public class Main {
 			int n = input[0];
 			int m = input[1];
 
-			dp = new int[30][30];
+			dp = new int[m + 1][n + 1];
 			System.out.println(combination(m, n));
 		}
 	}
