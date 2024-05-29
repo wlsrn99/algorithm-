@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.PriorityQueue;
 
 public class Main {
 	/**
@@ -26,10 +27,20 @@ public class Main {
 		int silver = 0;
 		int bronze = 0;
 
-		Country[] countries = new Country[n];
+		PriorityQueue<Country> pq = new PriorityQueue<>((o1, o2) -> {
+			if (o1.gold != o2.gold) {
+				return o2.gold - o1.gold;
+			} else if (o1.silver != o2.silver) {
+				return o2.silver - o1.silver;
+			} else if (o1.bronze != o2.bronze) {
+				return o2.bronze - o1.bronze;
+			} else {
+				return 0;
+			}
+		});
 		for (int i = 0; i < n; i++) {
 			int[] detail = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-			countries[i] = new Country(detail[0], detail[1], detail[2], detail[3]);
+			pq.add(new Country(detail[0], detail[1], detail[2], detail[3]));
 
 			if (detail[0] == k) {
 				gold = detail[1];
@@ -38,17 +49,12 @@ public class Main {
 			}
 		}
 
-		for (Country country : countries) {
-			if (country.gold > gold) {
-				rank++;
-				continue;
-			} else if (country.silver > silver && country.gold == gold) {
-				rank++;
-				continue;
-			} else if (country.bronze > bronze && country.silver == silver) {
-				rank++;
-				continue;
+		while (!pq.isEmpty()) {
+			Country country = pq.poll();
+			if (country.gold == gold && country.silver == silver && country.bronze == bronze) {
+				break;
 			}
+			rank++;
 		}
 
 		System.out.println(rank);
