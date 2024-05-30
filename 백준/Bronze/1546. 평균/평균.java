@@ -1,5 +1,4 @@
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,7 +12,7 @@ public class Main {
 		double max = Arrays.stream(score).max().getAsDouble();
 
 		double avg = Arrays.stream(score)
-			.map(o -> o / max * 100)
+			.map(a -> a / max * 100)
 			.average()
 			.getAsDouble();
 
