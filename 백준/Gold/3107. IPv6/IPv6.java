@@ -13,13 +13,13 @@ public class Main {
 
 
         StringBuilder sb = new StringBuilder();
-        int totalSize = contractionIp.length;
+        int ipSize = contractionIp.length;
 
-        for(int i = 0; i < totalSize; i++){
+        for(int i = 0; i < ipSize; i++){
             int size = contractionIp[i].length();
             // :일경우
             if(contractionIp[i].equals("#")){
-                for(int j = 0; j < 8 - (totalSize-1); j++){
+                for(int j = 0; j < 8 - (ipSize-1); j++){
                     sb.append("0000").append(":");
                 }
             }else {
@@ -29,7 +29,7 @@ public class Main {
                         sb.append("0");
                     }
                     sb.append(contractionIp[i]);
-                } else { // 문자열의 길이가 4일때
+                } else { 
                     sb.append(contractionIp[i]);
                 }
                 sb.append(":");
