@@ -50,13 +50,16 @@ public class Main {
 
 	private static int findRange(int start, int end) {
 		int left = findLowerBound(start);
-		int right = findUpperBound(end) - 1; // upper bound 수정
+		int right = findUpperBound(end);
 
-		return right - left + 1;
+		//right는 상한 값이므로 원래의 범위보다 + 1이 되어있음
+		//인덱스의 개수를 구하는 것이므로 원래의 범위 + 1을 해야하는데 이미 +1이 되어있으므로 그대로 반환
+		return right - left;
 	}
 
 	private static int findUpperBound(int target) {
 		int lo = 0;
+		//hi 값을 배열의 길이로 설정함으로써 배열의 끝까지 탐색할 수 있게된다 <<잘 이해가 안감
 		int hi = arr.length;
 
 		// lo가 hi랑 같아질 때 까지 반복
