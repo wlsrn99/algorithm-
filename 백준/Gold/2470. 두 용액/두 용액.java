@@ -24,44 +24,23 @@ public class Main {
 		int resultEnd = n - 1;
 
 		int resultSum = Integer.MAX_VALUE;
-		while (startPoint < n - 1) {
-			endPoint = lowerbound(startPoint + 1, n, -arr[startPoint]);
-
-			// Check candidates around the found lowerbound position
-			if (endPoint < n && endPoint > startPoint) {
-				int currentSum = arr[startPoint] + arr[endPoint];
-				if (Math.abs(currentSum) < Math.abs(resultSum)) {
-					resultSum = currentSum;
-					resultStart = startPoint;
-					resultEnd = endPoint;
-				}
+		while (startPoint < endPoint) {
+			int currentSum = arr[startPoint] + arr[endPoint];
+			
+			if (Math.abs(currentSum) < Math.abs(resultSum)) {
+				resultSum = currentSum;
+				resultStart = startPoint;
+				resultEnd = endPoint;
 			}
 
-			if (endPoint - 1 > startPoint) {
-				int currentSum = arr[startPoint] + arr[endPoint - 1];
-				if (Math.abs(currentSum) < Math.abs(resultSum)) {
-					resultSum = currentSum;
-					resultStart = startPoint;
-					resultEnd = endPoint - 1;
-				}
+			// 현재 합이 0보다 크면 endPoint를 감소시켜야 함
+			if (currentSum > 0) {
+				endPoint--;
+			} else {
+				startPoint++;
 			}
-
-			startPoint++;
 		}
 
 		System.out.println(arr[resultStart] + " " + arr[resultEnd]);
-	}
-
-	static int lowerbound(int start, int end, int target) {
-		int mid;
-		while (start < end) {
-			mid = (start + end) / 2;
-			if (arr[mid] >= target) {
-				end = mid;
-			} else {
-				start = mid + 1;
-			}
-		}
-		return end;
 	}
 }
