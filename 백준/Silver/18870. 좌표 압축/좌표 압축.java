@@ -1,13 +1,10 @@
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * 제일 작은 값 -> 0
@@ -23,18 +20,20 @@ public class Main {
 			.mapToInt(Integer::parseInt)
 			.toArray();
 
-		Set<Integer> sortedSet = new TreeSet<>();
-		for (int value : arr) {
-			sortedSet.add(value);
-		}
+		//treeSet으로 했다가 메모리를 너무 잡아먹는 것 같아서 배열로 수정
+		int[] sortedArr = Arrays.stream(arr).sorted().toArray();
 
 		int coordinate = 0;
+		// 수정된 좌표를 가지고있는 Map
 		Map<Integer, Integer> map = new HashMap<>();
-		for (int value : sortedSet) {
-			map.put(value, coordinate++);
+		for (int value : sortedArr) {
+			if (!map.containsKey(value)) { //중복 방지
+				map.put(value, coordinate++);
+			}
 		}
 
 		StringBuilder sb = new StringBuilder();
+		//배열의 벨류를 넣었을때 해당하는 좌표 출력
 		for (int value : arr) {
 			sb.append(map.get(value)).append(" ");
 		}
