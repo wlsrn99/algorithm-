@@ -51,7 +51,6 @@ public class Main {
 		if (result.isEmpty()) {
 			System.out.println(-1);
 		} else {
-			result.sort(Integer::compareTo);
 			for (int city : result) {
 				sb.append(city).append("\n");
 			}
