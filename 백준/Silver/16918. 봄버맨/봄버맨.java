@@ -97,13 +97,13 @@ public class Main {
 		//4번 1초가 지난 후 폭발 시키기
 		for (int i = 0; i < r; i++) {
 			for (int j = 0; j < c; j++) {
-				if (time[i][j] >= 3) {
+				if (time[i][j] == 3) {
 					time[i][j] = 0;
 					for (int k = 0; k < 4; k++) {
 						int nx = i + dx[k];
 						int ny = j + dy[k];
 						if (nx >= 0 && nx < r && ny >= 0 && ny < c) {
-							if (time[nx][ny] < 3) {
+							if (time[nx][ny] != 3) { //여기 조건 체크를 잘 못했어요
 								time[nx][ny] = 0;
 							}
 						}
