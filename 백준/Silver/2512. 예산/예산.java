@@ -1,12 +1,9 @@
 
 /**
-
- 가능한 한 최대의 총 예산
- 특정한 정수 상한액을 계산 -> 이분탐색
- 365
- 255
- 127
- 예산 정렬 후 현재 요청한 예산과 다음 요청한 예산의 합이 현재 예산보다 클 경우 상한값을 정하기
+ *  가능한 한 최대의 총 예산
+ *  특정한 정수 상한액을 계산 -> 이분탐색
+ *
+ *  상한액 - 배열의 합이 예산이 되는 상한 값 - 1
  */
 
 import java.io.BufferedReader;
@@ -31,9 +28,9 @@ public class Main {
 		int end = arr[n - 1];
 
 		int max = upperbound(start, end, m);
-		if (arr[n - 1] > max) {
+		if (arr[n - 1] > max) { //배열의 최대 값이 상한값 보다 큰 경우 대체 되어야 한다
 			max -= 1;
-		} else {
+		} else { //아닌 경우 그대로 유지
 			max = arr[n - 1];
 		}
 
