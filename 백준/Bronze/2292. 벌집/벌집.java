@@ -11,21 +11,23 @@ import java.io.InputStreamReader;
  * 234567 6개 거리 1
  * 8 ~ 19 12개 거리 2
  * 19 ~ 37 18개 거리 3
- * 
- * 
  */
 public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int input = Integer.parseInt(br.readLine());
-		
+		// 처음 시작지점 1 카운트
 		input -= 1;
+		// 같은 깊이에 있는숫자는 모두 거리가 같음
+		int dapth = 1;
 		
-		int start = 1;
 		int count = 1;
-		while (input > 0) {
-			input -= start * 6;
-			start++;
+		while (input > 0) { // 0보다 클 경우에만 깊이 증가가 가능
+			input -= dapth * 6;
+			
+			//깊이 증가 
+			dapth++;
+			// 거리 증가
 			count++;
 		}
 		System.out.println(count);
