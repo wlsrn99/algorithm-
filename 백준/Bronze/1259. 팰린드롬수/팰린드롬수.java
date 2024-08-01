@@ -18,9 +18,12 @@ public class Main {
 
 			boolean check = true;
 			int len = input.length();
+			int range = len / 2;
+			
+			char[] chars = input.toCharArray();
 
-			for (int i = 0; i < len / 2; i++) {
-				if (input.charAt(i) != input.charAt(len - 1 - i)) {
+			for (int i = 0; i < range; i++) {
+				if (chars[i] != chars[len - 1 - i]) {
 					check = false;
 					break;
 				}
