@@ -20,7 +20,8 @@ public class Main {
 		});
 
 		for (int i = 0; i < n; i++) {
-			int[] input = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+			int[] input = Arrays.stream(br.readLine().split(" "))
+				.mapToInt(Integer::parseInt).toArray();
 			pq.offer(new Coordinate(input[0], input[1]));
 		}
 
