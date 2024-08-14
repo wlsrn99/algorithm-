@@ -6,52 +6,33 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+	/**
+	 *  X라는 정수가 존재하는지 알아내는 프로그램
+	 *  배열, target의 위치 -> 이분탐색
+	 *
+	 */
+	public static void main(String[] args) throws IOException {
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int N = Integer.parseInt(br.readLine());
-        String[] input = br.readLine().split(" ");
-        int M = Integer.parseInt(br.readLine());
-        String[] input2 = br.readLine().split(" ");
+		int n = Integer.parseInt(br.readLine());
+		int[] arrN = Arrays.stream(br.readLine().split(" "))
+			.mapToInt(Integer::parseInt).toArray();
+		
+		int m = Integer.parseInt(br.readLine());
+		int[] arrM = Arrays.stream(br.readLine().split(" "))
+			.mapToInt(Integer::parseInt).toArray();
+		
+		Arrays.sort(arrN);
 
-        int[] arrN = new int[N];
-        for(int i = 0; i< N; i++){
-            arrN[i] = Integer.parseInt(input[i]);
-        }
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < m; i++) {
+			int num = arrM[i];
 
-        //배열 정렬
-        Arrays.sort(arrN);
-
-        StringBuilder sb = new StringBuilder();
-
-        for(int i = 0; i< M; i++){
-            int num = Integer.parseInt(input2[i]);
-
-            int start = 0;
-            int end = N-1;
-            boolean result = false;
-
-            while(start <= end){
-                int currentMid = (start + end)/2;
-
-                if(arrN[currentMid] < num){
-                    start = currentMid + 1;
-                }else if(arrN[currentMid] > num){
-                    end = currentMid - 1;
-                }else{
-                    result = true;
-                    break;
-                }
-            }
-
-            if(result){
-                sb.append(1).append("\n");
-            }else{
-                sb.append(0).append("\n");
-            }
-        }
-        System.out.println(sb);
-    }
+			int result = Arrays.binarySearch(arrN, num) >= 0 ? 1 : 0;
+			sb.append(result).append("\n");
+		}
+		System.out.println(sb);
+	}
 }
 
