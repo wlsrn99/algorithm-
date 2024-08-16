@@ -4,6 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * 최대한 적은 봉지
+ * n 에서 3을 빼면서 5로 나누어 떨어지는지 확인
+ *
+ */
 public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
