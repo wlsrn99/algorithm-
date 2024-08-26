@@ -8,13 +8,12 @@ import java.util.Arrays;
 public class Main {
 
 	static long[] arr;
-
-	static int n;
+	static int k, n;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int[] input = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-		int k = input[0];
+		k = input[0];
 		n = input[1];
 
 		arr = new long[k];
@@ -24,18 +23,18 @@ public class Main {
 
 		Arrays.sort(arr);
 
-		long start = 1L;
+		long start = 1;
 		long end = arr[k - 1];
 		long result = 0;
 
 		while (start <= end) {
-			long mid = (start + end) / 2;
+			long mid = start + (end - start) / 2; // 오버플로우 방지
 
 			if (check(mid)) {
-				end = mid - 1;
-			} else {
 				result = mid;
 				start = mid + 1;
+			} else {
+				end = mid - 1;
 			}
 		}
 
@@ -43,15 +42,11 @@ public class Main {
 	}
 
 	private static boolean check(long mid) {
-		int sum = 0;
+		long sum = 0;
 		for (long one : arr) {
 			sum += one / mid;
 		}
 
-		if (sum < n) {
-			return true;
-		}
-		return false;
+		return sum >= n; // 조건 변경
 	}
-
 }
