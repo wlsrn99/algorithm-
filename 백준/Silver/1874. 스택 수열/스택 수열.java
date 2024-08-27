@@ -18,17 +18,17 @@ public class Main {
 		}
 
 		int num = 1;
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n; i++) { //pop을 n번 진행해야 수열을 만들 수 있음 
 			while (stack.isEmpty() || stack.peek() != arr[i]) {
-				if (num > n) {
+				if (num > n) { //현재 push할 숫자가 n보다 크다면 만들 수 없음
 					System.out.println("NO");
 					return;
 				}
 				stack.push(num++);
-				sb.append("+\n");
+				sb.append("+").append("\n");
 			}
 			stack.pop();
-			sb.append("-\n");
+			sb.append("-").append("\n");
 		}
 
 		System.out.println(sb);
