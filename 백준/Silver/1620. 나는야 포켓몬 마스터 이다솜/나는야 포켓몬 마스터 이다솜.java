@@ -34,7 +34,10 @@ public class Main {
 		for (int i = 0; i < m; i++) {
 			String condition = br.readLine();
 
-			if (condition.charAt(0) >= 'A') { // 포켓몬의 이름은 모두 영어
+			// "일부 포켓몬은 마지막 문자만 대문자일 수도 있어" 라는 조건이 있는데 일단 통과가 되네요
+			// isDist라는 메서드를 사용해서 숫자인지 문자인지 파악할 수 있다고 하네요
+			// if (condition.charAt(0) >= 'A') { // 포켓몬의 이름은 모두 영어
+			if (!Character.isDigit(condition.charAt(0))) { //숫자면 true 문자면 false
 				int num = numMap.get(condition);
 				sb.append(num).append("\n");
 			} else {
