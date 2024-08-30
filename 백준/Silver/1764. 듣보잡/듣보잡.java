@@ -1,40 +1,52 @@
+
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        //듣도 못한 사람의 수 N
-        //보도 못한 사람의 수 M
+	/**
+	 * 듣도 보도 못한 사람의 명단
+	 *
+	 */
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int[] input = Arrays.stream(br.readLine().split(" "))
+			.mapToInt(Integer::parseInt).toArray();
 
-        Set<String> notListenPeople = new HashSet<>();
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String[] NM = br.readLine().split(" ");
-        int N = Integer.parseInt(NM[0]);
-        int M = Integer.parseInt(NM[1]);
+		int n = input[0]; //듣도 못한 사람 수
+		int m = input[1]; //보도 못한 사람 수
 
-        for(int i = 0; i < N; i++){
-            notListenPeople.add(br.readLine());
-        }
+		Set<String> set = new HashSet<>();
+		for (int i = 0; i < n; i++) {
+			set.add(br.readLine());
+		}
 
-        int count = 0;
-        Set<String> result = new TreeSet<>();
-        for(int i = 0; i < M; i++){
-            String person = br.readLine();
-            if(notListenPeople.contains(person)){
-                result.add(person);
-                count++;
-            }
-        }
+		List<String> list = new ArrayList<>();
+		for (int i = 0; i < m; i++) {
+			String current = br.readLine();
+			if (set.contains(current)) {
+				list.add(current);
+			}
+		}
+		Collections.sort(list);
 
-        System.out.println(count);
-        for(String r : result){
-            System.out.println(r);
-        }
+		StringBuilder sb = new StringBuilder();
+		sb.append(list.size()).append("\n");
 
+		for (String s : list) {
+			sb.append(s).append("\n");
+		}
+		System.out.println(sb);
 
-    }
+	}
+
 }
