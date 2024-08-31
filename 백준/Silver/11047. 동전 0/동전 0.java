@@ -4,36 +4,32 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int[] input = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] input = br.readLine().split(" ");
+        int n = Integer.parseInt(input[0]); // 동전의 종류
+        int k = Integer.parseInt(input[1]); // 가치의 합
 
-		int[] arr = new int[input[0]];
-		int value = input[1];
-		int idx = 0;
-		for (int i = 0; i < input[0]; i++) {
-			arr[i] = Integer.parseInt(br.readLine());
-			if (value / arr[i] != 0) {
-				idx = i;
-			}
-		}
+        Integer[] coins = new Integer[n];
+        for (int i = 0; i < n; i++) {
+            coins[i] = Integer.parseInt(br.readLine());
+        }
 
-		int count = 0;
-		for (int i = idx; i >= 0; i--) {
-			if (value == 0) {
-				break;
-			}
+        // 동전을 내림차순으로 정렬
+        Arrays.sort(coins, Collections.reverseOrder());
 
-			if (value / arr[i] == 0) {
-				continue;
-			}
+        int count = 0;
+        for (int coin : coins) {
+            if (k >= coin) {
+                count += k / coin;
+                k %= coin;
+            }
+            if (k == 0) break;
+        }
 
-			count += value / arr[i];
-			value %= arr[i];
-		}
-
-		System.out.println(count);
-	}
+        System.out.println(count);
+    }
 }
