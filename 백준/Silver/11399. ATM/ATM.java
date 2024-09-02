@@ -6,7 +6,8 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 
 /**
- * 시간의 합의 최솟값 -> 오름차순 정렬 후 더한값 + 현재 값 더하기
+ *  각 사람이 돈을 인출하는데 필요한 시간의 합의 최솟값
+ *  오름차순 정렬 후 더하기
  */
 public class Main {
 	public static void main(String[] args) throws IOException {
@@ -18,13 +19,14 @@ public class Main {
 			.sorted()
 			.toArray();
 
-		int resultSum = 0;
-		int sum = 0;
-		for (int minute : arr) {
-			resultSum += sum + minute;
-			sum += minute;
+		for (int i = 1; i < n; i++) {
+			arr[i] = arr[i] + arr[i - 1];
 		}
-
-		System.out.println(resultSum);
+		
+		int sum = 0;
+		for (int i : arr) {
+			sum += i;
+		}
+		System.out.println(sum);
 	}
 }
