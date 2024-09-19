@@ -13,8 +13,7 @@ import java.util.Queue;
 public class Main {
 	static List<ArrayList<Integer>> nodeList = new ArrayList<>();
 
-	static StringBuilder dfsSb = new StringBuilder();
-	static StringBuilder bfsSb = new StringBuilder();
+	static StringBuilder sb = new StringBuilder();
 	static boolean dfsVisited[];
 
 	static boolean bfsVisited[];
@@ -42,16 +41,15 @@ public class Main {
 			nodeList.get(input[1]).add(input[0]);
 		}
 
-		for (int i = 0; i < n+1; i++) {
+		for (int i = 0; i < n + 1; i++) {
 			Collections.sort(nodeList.get(i));
 		}
 
-		dfsSb.append(v).append(" ");
-		bfsSb.append(v).append(" ");
+		sb.append(v).append(" ");
 		dfs(v);
-		System.out.println(dfsSb);
+		sb.append("\n").append(v).append(" ");
 		bfs(v);
-		System.out.println(bfsSb);
+		System.out.println(sb);
 
 	}
 
@@ -59,7 +57,7 @@ public class Main {
 		dfsVisited[start] = true;
 		for (int current : nodeList.get(start)) {
 			if (!dfsVisited[current]) {
-				dfsSb.append(current).append(" ");
+				sb.append(current).append(" ");
 				dfs(current);
 			}
 		}
@@ -77,7 +75,7 @@ public class Main {
 				if (!bfsVisited[next]) {
 					bfsVisited[next] = true;
 					queue.offer(next);
-					bfsSb.append(next).append(" ");
+					sb.append(next).append(" ");
 				}
 			}
 		}
