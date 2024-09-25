@@ -9,6 +9,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * 연결 요소 -> 연결되어 있는 노드들의 집합
+ */
 public class Main {
 	static boolean[] visited;
 	static List<ArrayList<Integer>> nodeList = new ArrayList<>();
@@ -34,7 +37,7 @@ public class Main {
 
 		int count = 0;
 		for (int i = 1; i < n + 1; i++) {
-			if (!visited[i]) {
+			if (!visited[i]) { //현재 노드를 방문하지 않았다면 현재 노드와 연결되어 있는 모든 노드에 방문
 				count++;
 				bfs(i);
 			}
@@ -44,17 +47,15 @@ public class Main {
 
 	}
 
-	private static void bfs(int i) {
-		Queue<ArrayList> queue = new LinkedList<>();
-		visited[i] = true;
-		queue.add(nodeList.get(i));
-
+	private static void bfs(int start) {
+		Queue<Integer> queue = new LinkedList<>();
+		queue.add(start);
+		visited[start] = true;
 		while (!queue.isEmpty()) {
-			ArrayList<Integer> current = queue.poll();
-			for (int next : current) {
-				if (!visited[next]) {
-					visited[next] = true;
-					queue.add(nodeList.get(next));
+			for (Integer current : nodeList.get(queue.poll())) {
+				if (!visited[current]) {
+					visited[current] = true;
+					queue.add(current);
 				}
 			}
 		}
