@@ -29,7 +29,7 @@ public class Main {
 			int[] input = Arrays.stream(br.readLine().split(" "))
 				.mapToInt(Integer::parseInt).toArray();
 			for (int j = 0; j < n; j++) {
-				if (input[j] == 1) { //1인 경우 간선이 존재 
+				if (input[j] == 1) { //1인 경우 간선이 존재
 					nodeList.get(i).add(j);
 				}
 			}
@@ -56,15 +56,16 @@ public class Main {
 		boolean[] visited = new boolean[n];
 		visited[start] = true;
 		while (!queue.isEmpty()) {
-			List<Integer> current = nodeList.get(queue.poll());
-			for (Integer i : current) {
-				if (!visited[i]) {
-					visited[i] = true;
-					queue.offer(i);
+			List<Integer> list = nodeList.get(queue.poll());
+			for (Integer current : list) {
+				if (!visited[current]) {
+					visited[current] = true;
+					queue.offer(current);
 				}
-				if (i == end) { //end를 방문하는 경우가 있다면 양수인 경로가 있는 것 
+				if (current == end) { //end를 방문하는 경우가 있다면 양수인 경로가 있는 것
 					return true;
 				}
+
 			}
 		}
 		return false;
