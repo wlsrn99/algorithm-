@@ -58,14 +58,13 @@ public class Main {
 		while (!queue.isEmpty()) {
 			List<Integer> list = nodeList.get(queue.poll());
 			for (Integer current : list) {
+				if (current == end) { //end를 방문하는 경우가 있다면 양수인 경로가 있는 것
+					return true;
+				}
 				if (!visited[current]) {
 					visited[current] = true;
 					queue.offer(current);
 				}
-				if (current == end) { //end를 방문하는 경우가 있다면 양수인 경로가 있는 것
-					return true;
-				}
-
 			}
 		}
 		return false;
