@@ -56,6 +56,7 @@ public class Main {
 
 			if (current == last) {
 				result = command[current];
+				break;
 			}
 
 			int d = D(current);
