@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
+/**
+ * 1부터 N까지 자연수 중에서 중복 없이 M개를 고른 수열
+ * 고른 수열은 오름차순이어야 한다
+ */
 public class Main {
 	static int n, m;
 	static boolean[] visited;
@@ -17,17 +21,17 @@ public class Main {
 		n = input[0];
 		m = input[1];
 
-		int[] sequence = new int[m]; //크기 m의 수열을 담을 배열
+		int[] arr = new int[m];
 
 		visited = new boolean[n + 1];
-		findSequence(0, sequence);
+		findSequence(0, arr);
 		System.out.println(sb);
 	}
 
-	static void findSequence(int idx, int[] sequnce) {
-		if (idx == m) { // 주어진 수열의 크기만큼 수를 선택했을 때
+	static void findSequence(int idx, int[] arr) {
+		if (idx == m) {
 			for (int i = 0; i < m; i++) {
-				sb.append(sequnce[i]).append(" ");
+				sb.append(arr[i]).append(" ");
 			}
 			sb.append("\n");
 			return;
@@ -36,10 +40,10 @@ public class Main {
 		for (int i = 1; i <= n; i++) {
 			if (!visited[i]) {
 				visited[i] = true;
-				sequnce[idx] = i; // 선택된 숫자를 수열에 추가
-				findSequence(idx + 1, sequnce); // 다음 숫자를 선택하기 위해 재귀 호출
+				arr[idx] = i; // 선택된 숫자를 수열에 추가
+				findSequence(idx + 1, arr); // 다음 숫자를 선택하기 위해 재귀 호출
 				for (int j = i + 1; j <= n; j++) {
-					visited[j] = false; // 재귀가 종료되면 해당 숫자를 다시 선택 가능하도록 해제
+					visited[j] = false;
 				}
 			}
 		}
