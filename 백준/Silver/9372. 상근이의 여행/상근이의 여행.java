@@ -1,5 +1,4 @@
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,20 +22,8 @@ public class Main {
 			int n = input[0];//국가의 수
 			int m = input[1];//비행기의 종류
 
-			List<ArrayList<Integer>> nodeList = new ArrayList<>();
-			for (int i = 0; i <= n; i++) {
-				nodeList.add(new ArrayList<>());
-			}
-
 			for (int i = 0; i < m; i++) {
-				input = Arrays.stream(br.readLine().split(" "))
-					.mapToInt(Integer::parseInt).toArray();
-
-				// int v1 = input[0];
-				// int v2 = input[1];
-				//
-				// nodeList.get(v1).add(v2);
-				// nodeList.get(v2).add(v1);
+				br.readLine();
 			}
 
 			System.out.println(n - 1);
