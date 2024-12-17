@@ -7,7 +7,8 @@ public class Main {
 	static int x, len;
 	static char[] xArr;
 	static boolean[] visited;
-	static int min = 1000000;
+	static int MAX = 1000000;
+	static int min = MAX;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -20,7 +21,7 @@ public class Main {
 
 		char[] num = new char[len];
 		dfs(num, 0);
-		System.out.println(min == 1000000 ? 0 : min);
+		System.out.println(min == MAX ? 0 : min);
 	}
 
 	private static void dfs(char[] num, int depth) {
