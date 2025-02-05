@@ -42,7 +42,7 @@ public class Main {
 
 		//인접한 공유기 사이의 최대 거리를 찾아야 한다
 		int start = 1; //최소 거리
-		int end = houses[n - 1] - houses[0] + 1; //최대 거리
+		int end = houses[n - 1] - houses[0]; //최대 거리
 
 		int result = upperBound(start, end);
 
@@ -50,17 +50,19 @@ public class Main {
 	}
 
 	private static int upperBound(int start, int end) {
-		while (start < end) {
+		int result = end + 1;
+		while (start <= end) {
 			int mid = (start + end) / 2;
 			if (!canRouter(mid)) { //공유기 설치가 가능한지 여부
 				//불가능 하면 더 작은 범위를 탐색
-				end = mid;
+				result = mid;
+				end = mid - 1;
 			} else {
 				//가능하면 더 큰 범위를 탐색
 				start = mid + 1;
 			}
 		}
-		return end;
+		return result;
 	}
 
 	private static boolean canRouter(int dist) {
